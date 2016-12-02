@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Voting App | My Polls</title>
+    <title>Voting App | New Poll</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/public/css/main.css" rel="stylesheet" type="text/css">
@@ -44,26 +44,26 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h3>Hello <span id="display-name"></span>!</h3>
-        <p>Below is a list of all your polls. Select a poll to view it, add new option or delete it.</p>
-        <a href="/newpoll" class="btn btn-primary btn-lg" role="button">Click here to create a new poll</a>
+        <p>Fill up the information below to create a new poll.</p>
     </div>
 </div>
 
 <div class="container">
-	<div class="all-polls">
-		<table class="table table-hover">
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
-    	</table>
-	</div>
+    <div class="new-poll">
+    	<form>
+            <div class="form-group">
+                <label for="poll-description">Poll description:</label>
+                <input type="text" class="form-control" id="poll-description">
+            </div>
+            <div class="form-group">
+                <label for="poll-description">Poll options:</label>
+                <input type="text" class="form-control" id="poll-description" placeholder="Add new option"><br/>
+                <button class="btn btn-success" id="add-option">Add Option</button>
+            </div>
+            
+            <button type="submit" class="btn btn-default btn-lg btn-block">Create Poll</button>
+        </form>
+    </div>
 </div>
 
 <!-- Bootstrap & JQuery -->
@@ -72,6 +72,5 @@
 
 <!-- AJAX Scripts -->
 <script type="text/javascript" src="common/ajax-functions.js"></script>
-<script type="text/javascript" src="controllers/userController.client.js"></script>
 </body>
 </html>

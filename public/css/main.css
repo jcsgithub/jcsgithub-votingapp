@@ -38,6 +38,14 @@ body {
 
 
 
+/****** New Polls ******/
+
+.new-poll {
+    max-width: 500px;
+}
+
+
+
 /****** Footer ******/
 
 footer {
