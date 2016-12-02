@@ -44,9 +44,9 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1>FCC Voting App Project</h1>
-        <p>This is one of the project in Freecodecamp's curriculum, Dynamic Web Application Projects entitled: <br/> "Build a Voting App".</p>
-        <p>Login to create and manage your own poll. Or just click on any poll you want below and submit your vote!</p>
+        <h3>Hello <span id="display-name"></span>!</h3>
+        <p>Below is a list of all your polls. Select a poll to view it, add new option or delete it.</p>
+        <a href="/newpoll" class="btn btn-primary btn-lg" role="button">Click here to create a new poll</a>
     </div>
 </div>
 
@@ -66,18 +66,12 @@
 	</div>
 </div>
 
-<footer class="footer">
-	<div class="container">
-		<span>This app is built by <a href="">jcsgithub</a> of Freecodecamp.</span><br/>
-		<span>Github repository: <a href="">jcsgithub/jcsgithub-votingapp</a></span>
-	</div>
-</footer>
-
 <!-- Bootstrap & JQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- AJAX Scripts -->
 <script type="text/javascript" src="common/ajax-functions.js"></script>
+<script type="text/javascript" src="controllers/userController.client.js"></script>
 </body>
 </html>
