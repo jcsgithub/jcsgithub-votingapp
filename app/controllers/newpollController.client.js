@@ -4,17 +4,46 @@
    angular
       .module('VotingApp', ['ngResource'])
       .controller('newpollController', ['$scope', '$resource', function ($scope, $resource) {
+         
+         /***** INITIALIZE *****/
+         $scope.newPoll = { creator: '', description: '', options: [] };
+         $scope.newOption = '';
+         
          var User = $resource('/api/user');
+         
+         getUser();
 
-         $scope.getUser = function () {
+
+
+         /***** CONTROLLER FUNCTIONS *****/
+         function getUser () {
             User.get(function (result) {
-               if (result.displayName !== null) {
-                  $("#authorized-navbar").removeClass("hide");
-                  $("#unauthorized-navbar").addClass("hide");
-               }
+               $scope.newPoll.creator = result.id;
             });
-         };
+         }
 
-         $scope.getUser();
+         
+         
+         /***** USER CONTROLS *****/
+         $scope.addOption = function (option) {
+            if (!option) {
+               alert('Option required!');
+            } else {
+               $scope.newPoll.options.push(option);
+               $scope.newOption = '';
+            }
+         };
+         
+         $scope.deleteOption = function (index) {
+            $scope.newPoll.options.splice(index, 1);
+         };
+         
+         $scope.createPoll = function () {
+             if ($scope.newPoll.options.length < 2) {
+               alert('At least 2 options are required!');
+             } else {
+                console.log($scope.newPoll)
+             }
+         };
       }]);
 })();

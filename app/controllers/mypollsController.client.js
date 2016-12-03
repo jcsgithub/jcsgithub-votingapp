@@ -8,10 +8,9 @@
 
          $scope.getUser = function () {
             User.get(function (result) {
-               if (result.displayName !== null) {
-                  $("#authorized-navbar").removeClass("hide");
-                  $("#unauthorized-navbar").addClass("hide");
-               }
+               $scope.displayName = result.displayName;
+               $("#authorized-navbar").removeClass("hide");
+               $("#unauthorized-navbar").addClass("hide");
             });
          };
 

@@ -38,13 +38,17 @@ body {
 
 
 
-/****** New Polls ******/
+/****** New Poll ******/
 
 .new-poll .row > div{
     margin-bottom: 30px;
 }
 
-.newpolls-options div {
+.newpoll-form button[type="submit"] {
+    margin-top: 30px;
+}
+
+.newpoll-options div {
     margin-bottom: 15px;
 }
 
@@ -64,5 +68,9 @@ footer {
 }
 
 .hidden {
+    display: none !important;
+}
+
+[ng-cloak] {
     display: none !important;
 }
