@@ -7,7 +7,8 @@
 
     <title>Voting App | New Poll</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/public/css/main.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -52,23 +53,26 @@
     <div class="new-poll">
         <div class="row">
             <div class="col-md-6 col-xs-12 newpoll-form">
-                <form ng-submit="createPoll()">
+                <form ng-submit="addPoll()">
                     <div class="form-group">
                         <label for="poll-description">Poll description:</label>
-                        <input ng-model="newPoll.description" required type="text" class="form-control" placeholder="Question or description about your poll">
+                        <input ng-disabled="loader.isAddingPoll" ng-model="newPoll.description" required type="text" class="form-control" placeholder="Question or description about your poll">
                     </div>
                     
                     <div class="form-group">
                         <label for="poll-description">Poll options:</label>
                         <div class="input-group">
-                            <input ng-model="newOption" type="text" class="form-control" placeholder="Add new option"><br/>
+                            <input ng-disabled="loader.isAddingPoll" ng-model="newOption" type="text" class="form-control" placeholder="Add new option"><br/>
                             <span class="input-group-btn">
-                                <button ng-click="addOption(newOption)" class="btn btn-success" type="button">Add Option</button>
+                                <button ng-disabled="loader.isAddingPoll" ng-click="addOption(newOption)" class="btn btn-success" type="button">Add Option</button>
                             </span>
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-default btn-lg btn-block">Create Poll</button>
+                    <button ng-disabled="loader.isAddingPoll" type="submit" class="btn btn-default btn-lg btn-block">
+                        <span ng-if="!loader.isAddingPoll">Create Poll </span>
+                        <span ng-if="loader.isAddingPoll">Please wait <i class="fa fa-spinner fa-spin"></i></span>
+                    </button>
                 </form>
             </div>
             
@@ -76,9 +80,9 @@
                 <label>Options List:</label>
                 <div ng-repeat="data in newPoll.options track by $index" class="input-group">
                     <span class="input-group-addon">{{$index + 1}}.</span>
-                    <input ng-model="newPoll.options[$index]" type="text" class="form-control" placeholder="Option description">    
+                    <input ng-disabled="loader.isAddingPoll" ng-model="newPoll.options[$index]" type="text" class="form-control" placeholder="Option description">    
                     <span class="input-group-btn">
-                        <button ng-click="deleteOption($index)" class="btn btn-danger" type="button">Delete Option</button>
+                        <button ng-disabled="loader.isAddingPoll" ng-click="deleteOption($index)" class="btn btn-danger" type="button">Delete Option</button>
                     </span>
                 </div>
             </div>

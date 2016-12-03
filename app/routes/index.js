@@ -4,13 +4,13 @@ var path = process.cwd();
 
 module.exports = function (app, passport) {
 
-	function isLoggedIn (req, res, next) {
-		if (req.isAuthenticated()) {
-			return next();
-		} else {
-			res.redirect('/');
-		}
-	}
+    function isLoggedIn (req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        } else {
+            res.redirect('/');
+        }
+    }
 
 	function isAuthorized (req, res, next) {
 		if (req.isAuthenticated()) {
@@ -20,6 +20,11 @@ module.exports = function (app, passport) {
 		}
 	}
 
+
+
+
+
+	/***** Public routes *****/
 	app.route('/')
 		.get(function (req, res) {
 			res.sendFile(path + '/public/index.html');
@@ -40,13 +45,37 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/newpoll.html');
 		});
+
+	app.route('/newpoll/success')
+		.get(isLoggedIn, function (req, res) {
+			res.sendFile(path + '/public/newpoll-success.html');
+		});
+
+		
+		
 		
 
 	/***** APIs *****/
+	// Paths to import
+	var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
+	
+	
+	// Objects imported
+	var pollHandler = new PollHandler();
+	
+        
+    // Polls
+    app.route('/api/poll/new')
+        .post(isLoggedIn, pollHandler.addPoll);
+	
+	// User
     app.route('/api/user')
         .get(isAuthorized, function (req, res) {
             res.json(req.user.facebook);
         });
+    
+    
+    
 
 
 	/***** Facebook authorization *****/

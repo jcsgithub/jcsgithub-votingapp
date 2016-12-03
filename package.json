@@ -23,6 +23,7 @@
   "author": "jcsgithub",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
