@@ -35,7 +35,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul id="authorized-navbar" class="nav navbar-nav navbar-right">
                 <li><a href="/">Home</a></li>
-                <li class="active"><a href="#">My Polls</a></li>
+                <li><a href="/mypolls">My Polls</a></li>
                 <li><a href="/logout">Sign out</a></li>
             </ul>
         </div>
@@ -50,19 +50,52 @@
 
 <div class="container">
     <div class="new-poll">
-    	<form>
-            <div class="form-group">
-                <label for="poll-description">Poll description:</label>
-                <input type="text" class="form-control" id="poll-description">
-            </div>
-            <div class="form-group">
-                <label for="poll-description">Poll options:</label>
-                <input type="text" class="form-control" id="poll-description" placeholder="Add new option"><br/>
-                <button class="btn btn-success" id="add-option">Add Option</button>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <form>
+                    <div class="form-group">
+                        <label for="poll-description">Poll description:</label>
+                        <input type="text" class="form-control" id="poll-description" placeholder="Question or description about your poll">
+                    </div>
+                    <div class="form-group">
+                        <label for="poll-description">Poll options:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="poll-description" placeholder="Add new option"><br/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button" id="add-option">Add Option</button>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-default btn-lg btn-block">Create Poll</button>
+                </form>
             </div>
             
-            <button type="submit" class="btn btn-default btn-lg btn-block">Create Poll</button>
-        </form>
+            <div class="col-md-6 col-xs-12 newpolls-options">
+                <label>Options List:</label>
+                <div class="input-group">
+                    <span class="input-group-addon">1.</span>
+                    <input type="text" class="form-control" placeholder="Option description">    
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">Delete Option</button>
+                    </span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">2.</span>
+                    <input type="text" class="form-control" placeholder="Option description">    
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">Delete Option</button>
+                    </span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">3.</span>
+                    <input type="text" class="form-control" placeholder="Option description">    
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">Delete Option</button>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

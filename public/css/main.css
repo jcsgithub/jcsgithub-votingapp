@@ -40,8 +40,12 @@ body {
 
 /****** New Polls ******/
 
-.new-poll {
-    max-width: 500px;
+.new-poll .row > div{
+    margin-bottom: 30px;
+}
+
+.newpolls-options div {
+    margin-bottom: 15px;
 }
 
 
