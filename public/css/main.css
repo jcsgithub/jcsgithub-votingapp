@@ -36,6 +36,13 @@ body {
 	text-align: center;
 }
 
+.all-polls td a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+}
+
 
 
 /****** New Poll ******/

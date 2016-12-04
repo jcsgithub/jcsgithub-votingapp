@@ -35,8 +35,12 @@ function PollHandler () {
         console.log('deletePoll', req);
     };
     
-    this.getPoll = function (req, res) {
-        console.log('getPoll', req);
+    this.getPolls = function (req, res) {
+        Polls
+            .find({}, function (err, docs) {
+                if (err) { throw err; }
+                res.send({ data: docs });
+            });
     };
     
 //     this.getClicks = function (req, res) {

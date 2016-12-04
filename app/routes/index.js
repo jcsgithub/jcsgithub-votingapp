@@ -65,6 +65,8 @@ module.exports = function (app, passport) {
 	
         
     // Polls
+    app.route('/api/polls')
+        .get(pollHandler.getPolls);
     app.route('/api/poll/new')
         .post(isLoggedIn, pollHandler.addPoll);
 	
