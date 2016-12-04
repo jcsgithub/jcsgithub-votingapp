@@ -39,6 +39,19 @@ function PollHandler () {
         Polls
             .find({}, function (err, docs) {
                 if (err) { throw err; }
+                
+                res.send({ data: docs });
+            });
+    };
+    
+    this.getMyPolls = function (req, res) {
+        var data = req.query;
+        console.log(data)
+        
+        Polls
+            .find({ 'creator': data.creator }, function (err, docs) {
+                if (err) { throw err; }
+                
                 res.send({ data: docs });
             });
     };

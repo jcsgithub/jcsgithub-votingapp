@@ -53,15 +53,13 @@
 <div class="container">
 	<div class="all-polls">
 		<table class="table table-hover">
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
-    		<tr>
-    			<td>This is a sample poll description.</td>
-    		</tr>
+    		
+    		<!-- START MYPOLLS TEMPLATE -->
+			<tr ng-repeat="data in mypolls">
+				<td><a ng-href="/mypolls/{{data._id}}">{{data.description}}</a></td>
+			</tr>
+			<!-- END MYPOLLS TEMPLATE -->
+    		
     	</table>
 	</div>
 </div>
