@@ -7,11 +7,11 @@
          
          /***** INITIALIZE *****/
          $scope.loader = { isAddingPoll: false };
-         $scope.newPoll = { creator: '', description: '', options: [] };
          $scope.newOption = '';
+         $scope.newPoll = { creator: '', description: '', options: [] };
          
-         var User = $resource('/api/user');
          var NewPoll = $resource('/api/poll/new');
+         var User = $resource('/api/user');
          
          getUser();
 
@@ -31,13 +31,11 @@
             if (!option) {
                alert('Option required!');
             } else {
-               $scope.newPoll.options.push(option);
+               var optionObject = { name: option, vote: 0 };
+               
+               $scope.newPoll.options.push(optionObject);
                $scope.newOption = '';
             }
-         };
-         
-         $scope.deleteOption = function (index) {
-            $scope.newPoll.options.splice(index, 1);
          };
          
          $scope.addPoll = function () {
@@ -53,6 +51,10 @@
                      alert(err.data);
                });
             }
+         };
+         
+         $scope.deleteOption = function (index) {
+            $scope.newPoll.options.splice(index, 1);
          };
       }]);
 })();

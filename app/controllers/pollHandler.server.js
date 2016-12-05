@@ -22,6 +22,8 @@ function PollHandler () {
                         options: data.options
                     });
                     
+                    console.log(data)
+                    
                     poll.save(function (err) {
                         if (err) { return err; }
                         res.sendStatus(200);
@@ -33,6 +35,32 @@ function PollHandler () {
     
     this.deletePoll = function (req, res) {
         console.log('deletePoll', req);
+        // Polls.remove({}, function(err) { 
+        //   console.log('collection removed') 
+        //   res.send({ data: docs });
+        // });
+    };
+    
+    this.getMyPolls = function (req, res) {
+        var data = req.query;
+        
+        Polls
+            .find({ 'creator': data.creator }, function (err, docs) {
+                if (err) { throw err; }
+                
+                res.send({ data: docs });
+            });
+    };
+    
+    this.getPollById = function (req, res) {
+        var data = req.params;
+        
+        Polls
+            .findOne({ '_id': data.id }, function (err, result) {
+                if (err) { throw err; }
+                
+                res.send(result);
+            });
     };
     
     this.getPolls = function (req, res) {
@@ -44,16 +72,19 @@ function PollHandler () {
             });
     };
     
-    this.getMyPolls = function (req, res) {
-        var data = req.query;
-        console.log(data)
+    this.getVote = function (req, res) {
+        var data = req.params;
         
         Polls
-            .find({ 'creator': data.creator }, function (err, docs) {
+            .findOne({ 'pollId': data.pollId, 'voter': data.voter }, function (err, result) {
                 if (err) { throw err; }
                 
-                res.send({ data: docs });
+                res.send(result);
             });
+    };
+    
+    this.votePoll = function (req, res) {
+        var data = req.body;
     };
     
 //     this.getClicks = function (req, res) {

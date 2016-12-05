@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var Vote = new Schema({
     pollId: String,     // the poll where the vote belongs
-    userId: String,     // the voter
-    vote: Number        // the index of the option the user chose
+    vote: Number,       // the index of the option the user chose
+    voter: String       // the voter
 });
 
 module.exports = mongoose.model('Vote', Vote);

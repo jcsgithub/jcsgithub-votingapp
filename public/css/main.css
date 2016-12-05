@@ -17,7 +17,6 @@
 
 
 /****** Main Styling ******/
-
 body {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
@@ -28,26 +27,26 @@ body {
 
 
 /****** All Polls ******/
-
 .all-polls td {
     border: 1px solid #ddd;
 	cursor: pointer;
-	padding: 15px !important;
+	height: 100%;
+	padding: 0 !important;
 	text-align: center;
 }
 
 .all-polls td a {
     display: block;
     height: 100%;
+	padding: 20px !important;
     text-decoration: none;
     width: 100%;
 }
 
 
 
-/****** New Poll ******/
-
-.new-poll .row > div{
+/****** New Poll & View Poll ******/
+.newpoll .row > div, .viewpoll .row > div{
     margin-bottom: 30px;
 }
 
@@ -59,10 +58,16 @@ body {
     margin-bottom: 15px;
 }
 
+.viewpoll .submit-btn, .viewpoll .share-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 75%;
+}
+
 
 
 /****** Footer ******/
-
 footer {
 	margin: 20px 0 15px 0;
 }

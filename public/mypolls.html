@@ -44,7 +44,7 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h3>Hello {{displayName}}!</h3>
+        <h3 ng-cloak>Hello {{displayName}}!</h3>
         <p>Below is a list of all your polls. Select a poll to view it, add new option or delete it.</p>
         <a href="/newpoll" class="btn btn-primary btn-lg" role="button">Click here to create a new poll</a>
     </div>
@@ -52,11 +52,16 @@
 
 <div class="container">
 	<div class="all-polls">
+		<h4 class="text-center">
+		    <span ng-if="loader.isLoadingPolls">Loading data <i class="fa fa-spinner fa-spin"></i></span>
+			<span ng-if="!loader.isLoadingPolls" ng-cloak>POLLS FOUND: {{mypolls.length}}</span>
+	    </h4>
+		
 		<table class="table table-hover">
     		
     		<!-- START MYPOLLS TEMPLATE -->
 			<tr ng-repeat="data in mypolls">
-				<td><a ng-href="/mypolls/{{data._id}}">{{data.description}}</a></td>
+				<td><a ng-href="/mypolls/{{data._id}}" ng-cloak>{{data.description}}</a></td>
 			</tr>
 			<!-- END MYPOLLS TEMPLATE -->
     		

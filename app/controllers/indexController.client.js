@@ -6,6 +6,7 @@
       .controller('indexController', ['$scope', '$resource', function ($scope, $resource) {
          
          /***** INITIALIZE *****/
+         $scope.loader = { isLoadingPolls: true };
          $scope.polls = [];
          
          var User = $resource('/api/user');
@@ -28,8 +29,11 @@
          
          function getPolls () {
             Polls.get(function (res) {
+               $scope.loader.isLoadingPolls = false;
                $scope.polls = res.data;
             }, function (err) {
+               $scope.loader.isLoadingPolls = false;
+               
                console.log('getPolls error', err);
                alert('Oops! Something went wrong. Try again later.');
             });

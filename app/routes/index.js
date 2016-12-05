@@ -30,6 +30,11 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/index.html');
 		});
 
+	app.route('/polls/:id')
+		.get(function (req, res) {
+			res.sendFile(path + '/public/public-poll.html');
+		});
+
 	app.route('/logout')
 		.get(function (req, res) {
 			req.logout();
@@ -65,12 +70,17 @@ module.exports = function (app, passport) {
 	
         
     // Polls
-    app.route('/api/polls')
-        .get(pollHandler.getPolls);
-    app.route('/api/poll/new')
-        .post(isLoggedIn, pollHandler.addPoll);
     app.route('/api/mypolls')
         .get(isLoggedIn, pollHandler.getMyPolls);
+    app.route('/api/polls')
+        .get(pollHandler.getPolls);
+    app.route('/api/poll/:id')
+        .get(pollHandler.getPollById);
+    app.route('/api/poll/new')
+        .post(isLoggedIn, pollHandler.addPoll);
+    app.route('/api/vote/:pollId/:voter')
+    	.get(pollHandler.getVote)
+        .post(pollHandler.votePoll);
 	
 	// User
     app.route('/api/user')
@@ -88,7 +98,7 @@ module.exports = function (app, passport) {
 
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
-			successRedirect: '/mypolls',
+			successRedirect: 'back',
 			failureRedirect: '/'
 		}));
 };
