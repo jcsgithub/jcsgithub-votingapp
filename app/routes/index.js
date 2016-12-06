@@ -63,10 +63,12 @@ module.exports = function (app, passport) {
 	/***** APIs *****/
 	// Paths to import
 	var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
+	var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
 	
 	
 	// Objects imported
 	var pollHandler = new PollHandler();
+	var voteHandler = new VoteHandler();
 	
         
     // Polls
@@ -75,12 +77,15 @@ module.exports = function (app, passport) {
     app.route('/api/polls')
         .get(pollHandler.getPolls);
     app.route('/api/poll/:id')
-        .get(pollHandler.getPollById);
+        .get(pollHandler.getPollById)
+        .put(pollHandler.updatePoll);
     app.route('/api/poll/new')
         .post(isLoggedIn, pollHandler.addPoll);
+        
+    // Votes
     app.route('/api/vote/:pollId/:voter')
-    	.get(pollHandler.getVote)
-        .post(pollHandler.votePoll);
+    	.get(voteHandler.getVote)
+        .post(voteHandler.submitVote);
 	
 	// User
     app.route('/api/user')

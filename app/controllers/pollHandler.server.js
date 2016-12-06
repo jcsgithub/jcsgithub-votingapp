@@ -6,7 +6,7 @@ function PollHandler () {
     this.addPoll = function (req, res) {
         var data = req.body;
         
-        // Check if user already created the same poll
+        // Checks if user already created the same poll
         Polls
             .findOne({ 'creator': data.creator, 'description_lower': data.description.toLowerCase() }, { '_id': false })
             .exec(function (err, result) {
@@ -72,52 +72,21 @@ function PollHandler () {
             });
     };
     
-    this.getVote = function (req, res) {
+    this.updatePoll = function (req, res) {
         var data = req.params;
+        var newData = req.body;
+        
+        console.log('updatePoll', data, newData)
         
         Polls
-            .findOne({ 'pollId': data.pollId, 'voter': data.voter }, function (err, result) {
+            .findOneAndUpdate({ '_id': data.id }, { options: newData })
+            .exec(function (err, result) {
                 if (err) { throw err; }
-                
-                res.send(result);
-            });
+        
+                res.sendStatus(200);
+            }
+        );
     };
-    
-    this.votePoll = function (req, res) {
-        var data = req.body;
-    };
-    
-//     this.getClicks = function (req, res) {
-//         Users
-//             .findOne({ 'github.id': req.user.github.id }, { '_id': false })
-//             .exec(function (err, result) {
-//                 if (err) { throw err; }
-
-//                 res.json(result.nbrClicks);
-//             });
-//     };
-   
-//   this.addClick = function (req, res) {
-//         Users
-//             .findOneAndUpdate({ 'github.id': req.user.github.id }, { $inc: { 'nbrClicks.clicks': 1 } })
-//             .exec(function (err, result) {
-//                     if (err) { throw err; }
-
-//                     res.json(result.nbrClicks);
-//                 }
-//             );
-//     };
-
-//     this.resetClicks = function (req, res) {
-//         Users
-//             .findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
-//             .exec(function (err, result) {
-//                     if (err) { throw err; }
-
-//                     res.json(result.nbrClicks);
-//                 }
-//             );
-//     };
 }
 
 module.exports = PollHandler;

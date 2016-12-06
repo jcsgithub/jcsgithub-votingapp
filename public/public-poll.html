@@ -36,7 +36,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <!-- Navbar unauthorized -->
             <ul id="unauthorized-navbar" class="nav navbar-nav navbar-right hide">
-                <li class="active"><a href="#">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/auth/facebook">Sign in with Facebook</a></li>
             </ul>
             
@@ -53,14 +53,16 @@
 <div class="container">
     <div class="jumbotron">
         <h2>
-            <span ng-if="loader.isLoadingPoll">Loading poll <i class="fa fa-spinner fa-spin"></i></span>
-            <span ng-if="!loader.isLoadingPoll" ng-cloak>{{poll.description}}</span>
+            <span ng-if="loader.isLoadingData">Loading data <i class="fa fa-spinner fa-spin"></i></span>
+            <span ng-if="!loader.isLoadingData" ng-cloak>{{poll.description}}</span>
         </h2>
+        <h4 class="text-warning" ng-if="voteObject && isUserLoggedIn" ng-cloak>You voted "{{poll.options[voteObject.vote].name}}".</h4>
+        <h4 class="text-warning" ng-if="voteObject && !isUserLoggedIn" ng-cloak>Your public IP voted "{{poll.options[voteObject.vote].name}}".</h4>
     </div>
 </div>
 
-<div ng-if="!loader.isLoadingPoll" class="container">
-    <div class="viewpoll">
+<div class="container">
+    <div class="viewpoll hidden">
         <div class="row">
             <div class="col-md-6 col-xs-12 viewpoll-form">
                 <form ng-submit="submitVote()">
@@ -68,14 +70,14 @@
                         <label>Choose one from the options given:</label>
                         <select ng-disabled="loader.isSubmitting" ng-model="selectedOption" required class="form-control">
                             <option ng-if="!selectedOption" value="" disabled selected>-- Select one --</option>
-                            <option ng-repeat="data in poll.options">{{data.name}}</option>
-                            <option value="other-select-option">Other</option>
+                            <option ng-repeat="data in poll.options track by $index" value="{{$index}}">{{data.name}}</option>
+                            <option ng-if="isUserLoggedIn" value="other-select-option">Other</option>
                         </select>
                     </div>
                     
                     <div ng-if="selectedOption == 'other-select-option'" class="form-group">
                         <label>Other option:</label>
-                        <input ng-disabled="loader.isSubmitting" ng-model="newPoll.description" required type="text" class="form-control" placeholder="Question or description about your poll">
+                        <input id="newoption" ng-disabled="loader.isSubmitting" required type="text" class="form-control" placeholder="What is your new option?">
                     </div>
                     
                     <div class="row">

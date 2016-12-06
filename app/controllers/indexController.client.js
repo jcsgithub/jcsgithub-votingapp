@@ -31,6 +31,7 @@
             Polls.get(function (res) {
                $scope.loader.isLoadingPolls = false;
                $scope.polls = res.data;
+               $('.all-polls table').removeClass('hidden');
             }, function (err) {
                $scope.loader.isLoadingPolls = false;
                
