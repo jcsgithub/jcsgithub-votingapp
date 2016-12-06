@@ -25,12 +25,57 @@
          
          
          /***** CONTROLLER FUNCTIONS *****/
+         function createPieChart () {
+            var ctx = $("#myChart");
+            var backgroundColor = [];
+            var datasetsData = [], labels = [];
+            
+            // populate chart data
+            for (var i in $scope.poll.options) {
+               datasetsData.push($scope.poll.options[i].vote);
+               labels.push($scope.poll.options[i].name);
+               
+               backgroundColor.push(dynamicColors());
+            }
+            
+            var data = {
+                labels: labels,
+                datasets: [
+                    {
+                        data: datasetsData,
+                        backgroundColor: backgroundColor
+                    }]
+            };
+            
+            var options = {
+                type:"pie",
+                animation:{
+                    animateScale:true
+                }
+            }
+            
+            var myPieChart = new Chart(ctx,{
+                type: 'pie',
+                data: data,
+                options: options
+            });
+         }
+         
+         function dynamicColors () {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         }
+         
          function getUserVote (Vote) {
             Vote.get(function (res) {
                $scope.loader.isLoadingData = false;
                $('.viewpoll').removeClass('hidden');
                
                $scope.voteObject = res.data;
+               
+               createPieChart();
             }, function (err) {
                $scope.loader.isLoadingData = false;
                
