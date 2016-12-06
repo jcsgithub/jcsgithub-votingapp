@@ -19,8 +19,6 @@ function VoteHandler () {
     this.submitVote = function (req, res) {
         var data = req.body;
         
-        console.log('submitVote', data)  
-        
         var vote = new Votes(data);
         
         vote.save(function (err) {

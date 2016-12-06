@@ -6,6 +6,7 @@
       .controller('mypollsController', ['$scope', '$resource', function ($scope, $resource) {
          
          /***** INITIALIZE *****/
+         $scope.loader = { isLoadingData: true };
          $scope.displayName = '';
          $scope.mypolls = [];
          
@@ -19,7 +20,10 @@
          /***** CONTROLLER FUNCTIONS *****/
          function getMyPolls (id) {
             MyPolls.get({ creator: id }, function (res) {
+               $scope.loader.isLoadingData = false;
                $scope.mypolls = res.data;
+               
+               $('.viewpoll').removeClass('hidden');
             }, function (err) {
                console.log('getMyPolls error', err);
                alert('Oops! Something went wrong. Try again later.');

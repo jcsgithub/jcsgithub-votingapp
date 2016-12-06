@@ -8,6 +8,7 @@
     <title>Voting App | My Polls</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/public/css/main.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -45,7 +46,7 @@
 <div class="container">
     <div class="jumbotron">
         <h3 ng-cloak>Hello {{displayName}}!</h3>
-        <p>Below is a list of all your polls. Select a poll to view it, add new option or delete it.</p>
+        <p>Below is a list of all your polls. Select a poll to view its summary, or delete it.</p>
         <a href="/newpoll" class="btn btn-primary btn-lg" role="button">Click here to create a new poll</a>
     </div>
 </div>
@@ -53,8 +54,8 @@
 <div class="container">
 	<div class="all-polls">
 		<h4 class="text-center">
-		    <span ng-if="loader.isLoadingPolls">Loading data <i class="fa fa-spinner fa-spin"></i></span>
-			<span ng-if="!loader.isLoadingPolls" ng-cloak>POLLS FOUND: {{mypolls.length}}</span>
+			<span ng-if="!loader.isLoadingData" ng-cloak>POLLS CREATED: {{mypolls.length}}</span>
+			<span ng-if="loader.isLoadingData">Loading data <i class="fa fa-spinner fa-spin"></i></span>
 	    </h4>
 		
 		<table class="table table-hover">

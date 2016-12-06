@@ -22,8 +22,6 @@ function PollHandler () {
                         options: data.options
                     });
                     
-                    console.log(data)
-                    
                     poll.save(function (err) {
                         if (err) { return err; }
                         res.sendStatus(200);
@@ -45,7 +43,7 @@ function PollHandler () {
         var data = req.query;
         
         Polls
-            .find({ 'creator': data.creator }, function (err, docs) {
+            .find({ 'creator': data.creator }, null, {sort: {'_id': -1}}, function (err, docs) {
                 if (err) { throw err; }
                 
                 res.send({ data: docs });
@@ -65,7 +63,7 @@ function PollHandler () {
     
     this.getPolls = function (req, res) {
         Polls
-            .find({}, function (err, docs) {
+            .find({}, null, {sort: {'_id': -1}}, function (err, docs) {
                 if (err) { throw err; }
                 
                 res.send({ data: docs });
@@ -75,8 +73,6 @@ function PollHandler () {
     this.updatePoll = function (req, res) {
         var data = req.params;
         var newData = req.body;
-        
-        console.log('updatePoll', data, newData)
         
         Polls
             .findOneAndUpdate({ '_id': data.id }, { options: newData })

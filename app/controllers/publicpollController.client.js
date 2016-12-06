@@ -148,10 +148,17 @@ window.fbAsyncInit = function() {
          
          /***** USER CONTROLS *****/
          $scope.sharePoll = function () {
+            // FB.ui({
+            //    method: 'share',
+            //    display: 'popup',
+            //    href: window.location.href,
+            // }, function(response){});
+            
             FB.ui({
-               method: 'share',
-               display: 'popup',
-               href: window.location.href,
+               method: 'feed',
+               link: window.location.href,
+               caption: 'TITLE: ' + $scope.poll.description,
+               description: 'Click to cast your vote now!'
             }, function(response){});
          };
          
