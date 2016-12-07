@@ -163,18 +163,19 @@ window.fbAsyncInit = function() {
             
             if (!newOption)
                submitVoteNext();
-            
-            for (var i in $scope.poll.options) {
-               if ($scope.poll.options[i].name.toLowerCase() == newOption.toLowerCase()) {
-                  isOptionDuplicate = true;
-                  break;
-               }
+            else {
+               for (var i in $scope.poll.options) {
+                  if ($scope.poll.options[i].name.toLowerCase() == newOption.toLowerCase()) {
+                     isOptionDuplicate = true;
+                     break;
+                  }
+               }   
+               
+               if (isOptionDuplicate)
+                  alert('This option already exists!');
+               else
+                  submitVoteNext();
             }
-            
-            if (isOptionDuplicate)
-               alert('This option already exists!');
-            else
-               submitVoteNext();
          };
          
          function submitVoteNext () {
