@@ -166,7 +166,7 @@ window.fbAsyncInit = function() {
                caption: 'TITLE: ' + $scope.poll.description,
                description: 'Click to cast your vote now!'
             }, function(response){
-               showInformationModal('This option already exists!');
+               showInformationModal('Shared on facebook successfully!');
             });
          };
          
