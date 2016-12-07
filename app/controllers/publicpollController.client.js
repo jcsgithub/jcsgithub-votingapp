@@ -103,6 +103,11 @@ window.fbAsyncInit = function() {
             });
          }
          
+         function showInformationModal (message) {
+            $scope.modal.message = message;
+            $('#informationModal').modal('show');
+         }
+         
          function showWarningModal (message) {
             $scope.modal.message = message;
             $('#warningModal').modal('show');
@@ -160,7 +165,9 @@ window.fbAsyncInit = function() {
                link: window.location.href,
                caption: 'TITLE: ' + $scope.poll.description,
                description: 'Click to cast your vote now!'
-            }, function(response){});
+            }, function(response){
+               showInformationModal('This option already exists!');
+            });
          };
          
          $scope.submitVote = function () {
