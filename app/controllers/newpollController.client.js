@@ -44,7 +44,7 @@
             } else {
                $scope.loader.isAddingPoll = true;
                NewPoll.save($scope.newPoll, function (res) {
-                  window.location = 'https://jcsgithub-votingapp-jcsgithub.c9users.io/newpoll/success';
+                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/newpoll/success';
                }, function (err) {
                   $scope.loader.isAddingPoll = false;
                   if (err.status == 500)

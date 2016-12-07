@@ -53,7 +53,7 @@
                
                ]).then(function (success) {
                   alert('Poll deleted!');
-                  window.location = 'https://jcsgithub-votingapp-jcsgithub.c9users.io/mypolls';
+                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
                });
                
             }
