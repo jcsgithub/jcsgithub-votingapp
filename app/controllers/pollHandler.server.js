@@ -31,12 +31,46 @@ function PollHandler () {
             });
     };
     
+    this.isCreatorValid = function (req, res, next) {
+        var creator = req.user.facebook.id;
+        var pollId = req.params.id;
+        
+        // Checks if active user created the poll
+        Polls
+            .findOne({ '_id': pollId }, { '_id': false })
+            .exec(function (err, result) {
+                if (err) { 
+                    res.status(404).send('Poll not found.');
+                } else {
+                    if (result) {
+                        if (result.creator == creator)
+                            return next();  
+                        else
+                            res.status(401).send('You are unauthorized to access this poll.');
+                    } else {
+                        res.status(404).send('Poll not found.');
+                    }
+                }
+            });
+    };
+    
     this.deletePoll = function (req, res) {
-        console.log('deletePoll', req);
-        // Polls.remove({}, function(err) { 
-        //   console.log('collection removed') 
-        //   res.send({ data: docs });
-        // });
+        var pollId = req.params.id;
+        
+        Polls
+            .findOne({ '_id': pollId })
+            .remove()
+            .exec(function (err, result) {
+                if (err) { 
+                    res.status(404).send('Poll not found.');
+                } else {
+                    if (result) {
+                        res.sendStatus(200);
+                    } else {
+                        res.status(401).send('You are unauthorized to delete this poll.');
+                    }
+                }
+            });
     };
     
     this.getMyPolls = function (req, res) {

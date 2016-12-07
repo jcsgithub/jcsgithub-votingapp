@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="VotingApp">
+<html lang="en" ng-app="VotingApp" ng-controller="mypollSelectedController">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>My Polls</title>
+    <title ng-bind="poll.description">Voting App</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/public/css/main.css" rel="stylesheet" type="text/css">
 
@@ -18,7 +18,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body ng-controller="mypollsController">
+<body>
 	
 <!-- Navbar -->
 <nav class="navbar navbar-default navbar-static-top">
@@ -36,7 +36,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul id="authorized-navbar" class="nav navbar-nav navbar-right">
                 <li><a href="/">Home</a></li>
-                <li class="active"><a href="#">My Polls</a></li>
+                <li><a href="/mypolls">My Polls</a></li>
                 <li><a href="/logout">Sign out</a></li>
             </ul>
         </div>
@@ -45,29 +45,42 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h3 ng-cloak>Hello {{displayName}}!</h3>
-        <p>Below is a list of all your polls. Select a poll to view its summary, or delete it.</p>
-        <a href="/newpoll" class="btn btn-primary btn-lg" role="button">Click here to create a new poll</a>
+        <h2>
+            <span ng-if="loader.isLoadingData">Loading data <i class="fa fa-spinner fa-spin"></i></span>
+            <span ng-if="!loader.isLoadingData" ng-cloak>{{poll.description}}</span>
+        </h2>
+        <p ng-if="!loader.isLoadingData">Below is a summary of the votes of this poll.</p>
+        <button ng-if="!loader.isLoadingData" ng-disabled="loader.isDeleting" ng-click="deletePoll()" class="btn btn-danger btn-lg" type="button">
+            <span ng-if="!loader.isDeleting">Delete this poll</span>
+            <span ng-if="loader.isDeleting">Deleting <i class="fa fa-spinner fa-spin"></i></span>
+        </button>
     </div>
 </div>
 
 <div class="container">
-	<div class="all-polls">
-		<h4 class="text-center">
-			<span ng-if="!loader.isLoadingData" ng-cloak>POLLS CREATED: {{mypolls.length}}</span>
-			<span ng-if="loader.isLoadingData">Loading data <i class="fa fa-spinner fa-spin"></i></span>
-	    </h4>
-		
-		<table class="table table-hover">
-    		
-    		<!-- START MYPOLLS TEMPLATE -->
-			<tr ng-repeat="data in mypolls">
-				<td><a ng-href="/mypolls/{{data._id}}" ng-cloak>{{data.description}}</a></td>
-			</tr>
-			<!-- END MYPOLLS TEMPLATE -->
-    		
-    	</table>
-	</div>
+    <div ng-if="!loader.isLoadingData" class="mypoll-options">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Option Name</th>
+                    <th>Vote Count</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                
+                <!-- START OPTION TEMPLATE -->
+                <tr ng-repeat="data in poll.options track by $index">
+                    <td ng-cloak>{{$index + 1}}</td>
+                    <td ng-cloak>{{data.name}}</td>
+                    <td ng-cloak>{{data.vote}}</td>
+                </tr>
+                <!-- END OPTION TEMPLATE -->
+                
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Bootstrap & JQuery -->
@@ -78,7 +91,10 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
 <script type="text/javascript" src="https://code.angularjs.org/1.6.0-rc.2/angular-resource.min.js"></script>
 
+<!-- ChartJS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 <!-- Controllers -->
-<script type="text/javascript" src="controllers/mypollsController.client.js"></script>
+<script type="text/javascript" src="../controllers/mypollSelectedController.client.js"></script>
 </body>
 </html>

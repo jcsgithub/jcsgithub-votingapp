@@ -3,6 +3,25 @@
 var Votes = require('../models/votes.js');
 
 function VoteHandler () {
+    this.deleteVotes = function (req, res) {
+        var pollId = req.params.id;
+        
+        Votes
+            .find({ 'pollId': pollId })
+            .remove()
+            .exec(function (err, results) {
+                if (err) { 
+                    res.status(404).send('Votes not found.');
+                } else {
+                    if (results) {
+                        res.sendStatus(200);
+                    } else {
+                        res.status(401).send('You are unauthorized to delete these votes.');
+                    }
+                }
+            });  
+    };
+    
     this.getVote = function (req, res) {
         var data = req.params;
         

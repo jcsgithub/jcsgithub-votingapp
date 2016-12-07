@@ -3,6 +3,17 @@
 var path = process.cwd();
 
 module.exports = function (app, passport) {
+	// Paths to import
+	var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
+	var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
+	
+	// Objects imported
+	var pollHandler = new PollHandler();
+	var voteHandler = new VoteHandler();
+	
+	
+	
+	
 
     function isLoggedIn (req, res, next) {
         if (req.isAuthenticated()) {
@@ -46,6 +57,11 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/mypolls.html');
 		});
 
+	app.route('/mypolls/:id')
+		.get(isLoggedIn, pollHandler.isCreatorValid, function (req, res) {
+			res.sendFile(path + '/public/mypoll-selected.html');
+		});
+
 	app.route('/newpoll')
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/newpoll.html');
@@ -61,16 +77,6 @@ module.exports = function (app, passport) {
 		
 
 	/***** APIs *****/
-	// Paths to import
-	var PollHandler = require(path + '/app/controllers/pollHandler.server.js');
-	var VoteHandler = require(path + '/app/controllers/voteHandler.server.js');
-	
-	
-	// Objects imported
-	var pollHandler = new PollHandler();
-	var voteHandler = new VoteHandler();
-	
-        
     // Polls
     app.route('/api/mypolls')
         .get(isLoggedIn, pollHandler.getMyPolls);
@@ -78,11 +84,14 @@ module.exports = function (app, passport) {
         .get(pollHandler.getPolls);
     app.route('/api/poll/:id')
         .get(pollHandler.getPollById)
-        .put(pollHandler.updatePoll);
+        .put(pollHandler.updatePoll)
+        .delete(isLoggedIn, pollHandler.isCreatorValid, pollHandler.deletePoll);
     app.route('/api/poll/new')
         .post(isLoggedIn, pollHandler.addPoll);
         
     // Votes
+    app.route('/api/votes/:id')
+        .delete(isLoggedIn, pollHandler.isCreatorValid, voteHandler.deleteVotes);
     app.route('/api/vote/:pollId/:voter')
     	.get(voteHandler.getVote)
         .post(voteHandler.submitVote);
@@ -103,7 +112,7 @@ module.exports = function (app, passport) {
 
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
-			successRedirect: 'back',
+			successRedirect: '/',
 			failureRedirect: '/'
 		}));
 };

@@ -41,6 +41,7 @@ window.fbAsyncInit = function() {
          var Vote;
          
          
+         
          /***** CONTROLLER FUNCTIONS *****/
          function createPieChart () {
             var ctx = $("#myChart");
@@ -148,12 +149,6 @@ window.fbAsyncInit = function() {
          
          /***** USER CONTROLS *****/
          $scope.sharePoll = function () {
-            // FB.ui({
-            //    method: 'share',
-            //    display: 'popup',
-            //    href: window.location.href,
-            // }, function(response){});
-            
             FB.ui({
                method: 'feed',
                link: window.location.href,
@@ -185,14 +180,14 @@ window.fbAsyncInit = function() {
                   
                   // create new vote
                   Vote.save($scope.vote, function (res) {
-                     console.log('Vote.save', res)
+                     console.log('Vote saved')
                   }, function (err) {
                      console.log('Vote.save error', err);
                   }),
                   
                   // update poll votes
                   PollById.update(newOptionsValue, $scope.poll.options, function (res) {
-                     console.log('PollById.update', res)
+                     console.log('Poll updated')
                   }, function (err) {
                      console.log('PollById.update error', err);
                   })
