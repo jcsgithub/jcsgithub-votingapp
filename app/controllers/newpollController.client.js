@@ -34,7 +34,7 @@
                var isOptionDuplicate = false;
                
                for (var i in $scope.newPoll.options) {
-                  if ($scope.newPoll.options[i].toLowerCase() == option.toLowerCase()) {
+                  if ($scope.newPoll.options[i].name.toLowerCase() == option.toLowerCase()) {
                      isOptionDuplicate = true;
                      break;
                   }

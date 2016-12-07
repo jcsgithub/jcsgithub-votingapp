@@ -162,7 +162,7 @@ window.fbAsyncInit = function() {
             var newOption = $('#newoption').val();
             
             for (var i in $scope.poll.options) {
-               if ($scope.poll.options[i].toLowerCase() == newOption.toLowerCase()) {
+               if ($scope.poll.options[i].name.toLowerCase() == newOption.toLowerCase()) {
                   isOptionDuplicate = true;
                   break;
                }
