@@ -52,7 +52,7 @@
         <p ng-if="!loader.isLoadingData">Below is a summary of the votes of this poll.</p>
         <button ng-if="!loader.isLoadingData" ng-disabled="loader.isDeleting" ng-click="deletePoll()" class="btn btn-danger btn-lg" type="button">
             <span ng-if="!loader.isDeleting">Delete this poll</span>
-            <span ng-if="loader.isDeleting">Deleting <i class="fa fa-spinner fa-spin"></i></span>
+            <span class="hidden deleting-spinner">Deleting <i class="fa fa-spinner fa-spin"></i></span>
         </button>
     </div>
 </div>

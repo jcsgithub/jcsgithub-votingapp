@@ -31,10 +31,23 @@
             if (!option) {
                alert('Option required!');
             } else {
-               var optionObject = { name: option, vote: 0 };
+               var isOptionDuplicate = false;
                
-               $scope.newPoll.options.push(optionObject);
-               $scope.newOption = '';
+               for (var i in $scope.newPoll.options) {
+                  if ($scope.newPoll.options[i].toLowerCase == option) {
+                     isOptionDuplicate = true;
+                     break;
+                  }
+               }
+               
+               if (isOptionDuplicate) {
+                  alert('This option already exists!');
+               } else {
+                  var optionObject = { name: option, vote: 0 };
+                  
+                  $scope.newPoll.options.push(optionObject);
+                  $scope.newOption = '';
+               }
             }
          };
          
@@ -44,7 +57,8 @@
             } else {
                $scope.loader.isAddingPoll = true;
                NewPoll.save($scope.newPoll, function (res) {
-                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/newpoll/success';
+                  alert('New poll added!');
+                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
                }, function (err) {
                   $scope.loader.isAddingPoll = false;
                   if (err.status == 500)

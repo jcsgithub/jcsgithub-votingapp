@@ -34,6 +34,7 @@
          $scope.deletePoll = function () {
             if (confirm('Are you sure you want to delete this poll?')) {
                $scope.loader.isDeleting = true;
+               $('.deleting-spinner').removeClass('hidden');
                
                $q.all([
                   

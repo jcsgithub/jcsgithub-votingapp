@@ -158,8 +158,24 @@ window.fbAsyncInit = function() {
          };
          
          $scope.submitVote = function () {
+            var isOptionDuplicate = false;
             var newOption = $('#newoption').val();
-            var newOptionsValue = $scope.poll.options;
+            
+            for (var i in $scope.poll.options) {
+               if ($scope.poll.options[i].toLowerCase() == newOption.toLowerCase()) {
+                  isOptionDuplicate = true;
+                  break;
+               }
+            }
+            
+            if (isOptionDuplicate)
+               alert('This option already exists!');
+            else
+               submitVoteNext();
+         };
+         
+         function submitVoteNext () {
+            var newOption = $('#newoption').val();
             
             if ($scope.selectedOption == 'other-select-option') {
                $scope.vote.vote = $scope.poll.options.length;
@@ -186,7 +202,7 @@ window.fbAsyncInit = function() {
                   }),
                   
                   // update poll votes
-                  PollById.update(newOptionsValue, $scope.poll.options, function (res) {
+                  PollById.update($scope.poll.options, function (res) {
                      console.log('Poll updated')
                   }, function (err) {
                      console.log('PollById.update error', err);
