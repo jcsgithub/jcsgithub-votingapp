@@ -167,6 +167,7 @@ window.fbAsyncInit = function() {
                description: 'Click to cast your vote now!'
             }, function(response){
                showInformationModal('Shared on facebook successfully!');
+               $scope.$apply();
             });
          };
          
