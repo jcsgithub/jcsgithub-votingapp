@@ -25,6 +25,7 @@ window.fbAsyncInit = function() {
          /***** INITIALIZE *****/
          $scope.isUserLoggedIn = false;
          $scope.loader = { isLoadingData: true, isSubmitting: false, isSharing: false };
+         $scope.modal = { message: '' };
          $scope.poll = {};
          $scope.selectedOption = '';
          $scope.vote = {};
@@ -102,6 +103,11 @@ window.fbAsyncInit = function() {
             });
          }
          
+         function showWarningModal (message) {
+            $scope.modal.message = message;
+            $('#warningModal').modal('show');
+         }
+         
          // Wait for all queries to be done, then get user's vote data
          $q.all([
             
@@ -172,7 +178,7 @@ window.fbAsyncInit = function() {
                }   
                
                if (isOptionDuplicate)
-                  alert('This option already exists!');
+                  showWarningModal('This option already exists!');
                else
                   submitVoteNext();
             }
@@ -213,15 +219,17 @@ window.fbAsyncInit = function() {
                   })
                   
                ]).then(function (success) {
-                  alert('Vote success!');
-                  location.reload();
+                  $('#successModal').modal('show');
+                  $('#successModal').on('hide.bs.modal', function (e) {
+                     location.reload();
+                  });
                });
                
             } else {
                if ($scope.isUserLoggedIn) 
-                  alert('You already voted for this poll!');
+                  showWarningModal('You already voted for this poll!');
                else 
-                  alert('Your public IP address has voted for this poll!');
+                  showWarningModal('Your public IP address has voted for this poll!');
             }
          };
       }]);

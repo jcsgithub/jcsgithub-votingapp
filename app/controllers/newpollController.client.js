@@ -7,6 +7,7 @@
          
          /***** INITIALIZE *****/
          $scope.loader = { isAddingPoll: false };
+         $scope.modal = { message: '' };
          $scope.newOption = '';
          $scope.newPoll = { creator: '', description: '', options: [] };
          
@@ -23,13 +24,18 @@
                $scope.newPoll.creator = result.id;
             });
          }
+         
+         function showWarningModal (message) {
+            $scope.modal.message = message;
+            $('#warningModal').modal('show');
+         }
 
          
          
          /***** USER CONTROLS *****/
          $scope.addOption = function (option) {
             if (!option) {
-               alert('Option required!');
+               showWarningModal('Option required!');
             } else {
                var isOptionDuplicate = false;
                
@@ -41,7 +47,7 @@
                }
                
                if (isOptionDuplicate) {
-                  alert('This option already exists!');
+                  showWarningModal('This option already exists!');
                } else {
                   var optionObject = { name: option, vote: 0 };
                   
@@ -53,12 +59,14 @@
          
          $scope.addPoll = function () {
             if ($scope.newPoll.options.length < 2) {
-               alert('At least 2 options are required!');
+               showWarningModal('At least 2 options are required!');
             } else {
                $scope.loader.isAddingPoll = true;
                NewPoll.save($scope.newPoll, function (res) {
-                  alert('New poll added!');
-                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
+                  $('#successModal').modal('show');
+                  $('#successModal').on('hide.bs.modal', function (e) {
+                     window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
+                  });
                }, function (err) {
                   $scope.loader.isAddingPoll = false;
                   if (err.status == 500)
