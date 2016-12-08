@@ -1,3 +1,9 @@
+# Voting App
+
+## Overview
+
+This app is made using MEAN stack. For the completion on one of Freecodecamp's Dynamic Web Application Projects, [Build a Voting App](https://www.freecodecamp.com/challenges/build-a-voting-app)
+
 # Clementine.js FCC Boilerplate
 
 [![Join the chat at https://gitter.im/johnstonbl01/clementinejs](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/johnstonbl01/clementinejs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
