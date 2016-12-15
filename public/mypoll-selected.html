@@ -19,6 +19,44 @@
     <![endif]-->
 </head>
 <body>
+    
+<!-- Bootstrap Modals Start -->
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Delete Poll</h4>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you want to delete the poll "{{$scope.poll.description}}"?</p>
+				<p><span class="text-danger">WARNING</span>: You cannot recover the poll after deleting it.</p>
+			</div>
+			<div class="modal-footer">
+				<button ng-click="deletePoll()" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="successModal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Delete Poll</h4>
+			</div>
+			<div class="modal-body">
+				<p>Poll deleted!</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary center-block" data-dismiss="modal">Go back to My Polls</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Bootstrap Modals End -->
 	
 <!-- Navbar -->
 <nav class="navbar navbar-default navbar-static-top">
@@ -50,9 +88,9 @@
             <span ng-if="!loader.isLoadingData" ng-cloak>{{poll.description}}</span>
         </h2>
         <p ng-if="!loader.isLoadingData">Below is a summary of the votes of this poll.</p>
-        <button ng-if="!loader.isLoadingData" ng-disabled="loader.isDeleting" ng-click="deletePoll()" class="btn btn-danger btn-lg" type="button">
+        <button ng-if="!loader.isLoadingData" ng-disabled="loader.isDeleting" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-lg" type="button">
             <span ng-if="!loader.isDeleting">Delete this poll</span>
-            <span ng-if="loader.isDeleting">Deleting <i class="fa fa-spinner fa-spin"></i></span>
+            <span class="hidden deleting-spinner">Deleting <i class="fa fa-spinner fa-spin"></i></span>
         </button>
     </div>
 </div>

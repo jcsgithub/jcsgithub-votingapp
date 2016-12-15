@@ -32,31 +32,31 @@
          
          /***** USER CONTROLS *****/
          $scope.deletePoll = function () {
-            if (confirm('Are you sure you want to delete this poll?')) {
-               $scope.loader.isDeleting = true;
+            $scope.loader.isDeleting = true;
+            $('.deleting-spinner').removeClass('hidden');
+            
+            $q.all([
                
-               $q.all([
-                  
-                  // delete selected poll
-                  PollById.delete().$promise.then(function (res) {
-                     console.log('Poll deleted')
-                  }, function (err) {
-                     console.log('PollById.delete error', err);
-                  }),
-                  
-                  // delete all votes of the poll
-                  VotesByPollId.delete().$promise.then(function (res) {
-                     console.log('Votes deleted')
-                  }, function (err) {
-                     console.log('VotesByPollId.delete error', err);
-                  })
+               // delete selected poll
+               PollById.delete().$promise.then(function (res) {
+                  console.log('Poll deleted')
+               }, function (err) {
+                  console.log('PollById.delete error', err);
+               }),
                
-               ]).then(function (success) {
-                  alert('Poll deleted!');
-                  window.location = 'https://jcsgithub-votingapp-jcsgithub.c9users.io/mypolls';
+               // delete all votes of the poll
+               VotesByPollId.delete().$promise.then(function (res) {
+                  console.log('Votes deleted')
+               }, function (err) {
+                  console.log('VotesByPollId.delete error', err);
+               })
+            
+            ]).then(function (success) {
+               $('#successModal').modal('show');
+               $('#successModal').on('hide.bs.modal', function (e) {
+                  window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
                });
-               
-            }
+            });
          };
       }]);
 })();

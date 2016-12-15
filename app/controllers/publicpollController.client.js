@@ -25,6 +25,7 @@ window.fbAsyncInit = function() {
          /***** INITIALIZE *****/
          $scope.isUserLoggedIn = false;
          $scope.loader = { isLoadingData: true, isSubmitting: false, isSharing: false };
+         $scope.modal = { message: '' };
          $scope.poll = {};
          $scope.selectedOption = '';
          $scope.vote = {};
@@ -102,6 +103,16 @@ window.fbAsyncInit = function() {
             });
          }
          
+         function showInformationModal (message) {
+            $scope.modal.message = message;
+            $('#informationModal').modal('show');
+         }
+         
+         function showWarningModal (message) {
+            $scope.modal.message = message;
+            $('#warningModal').modal('show');
+         }
+         
          // Wait for all queries to be done, then get user's vote data
          $q.all([
             
@@ -154,12 +165,35 @@ window.fbAsyncInit = function() {
                link: window.location.href,
                caption: 'TITLE: ' + $scope.poll.description,
                description: 'Click to cast your vote now!'
-            }, function(response){});
+            }, function(response){
+               showInformationModal('Shared on facebook successfully!');
+               $scope.$apply();
+            });
          };
          
          $scope.submitVote = function () {
+            var isOptionDuplicate = false;
             var newOption = $('#newoption').val();
-            var newOptionsValue = $scope.poll.options;
+            
+            if (!newOption)
+               submitVoteNext();
+            else {
+               for (var i in $scope.poll.options) {
+                  if ($scope.poll.options[i].name.toLowerCase() == newOption.toLowerCase()) {
+                     isOptionDuplicate = true;
+                     break;
+                  }
+               }   
+               
+               if (isOptionDuplicate)
+                  showWarningModal('This option already exists!');
+               else
+                  submitVoteNext();
+            }
+         };
+         
+         function submitVoteNext () {
+            var newOption = $('#newoption').val();
             
             if ($scope.selectedOption == 'other-select-option') {
                $scope.vote.vote = $scope.poll.options.length;
@@ -186,22 +220,24 @@ window.fbAsyncInit = function() {
                   }),
                   
                   // update poll votes
-                  PollById.update(newOptionsValue, $scope.poll.options, function (res) {
+                  PollById.update($scope.poll.options, function (res) {
                      console.log('Poll updated')
                   }, function (err) {
                      console.log('PollById.update error', err);
                   })
                   
                ]).then(function (success) {
-                  alert('Vote success!');
-                  location.reload();
+                  $('#successModal').modal('show');
+                  $('#successModal').on('hide.bs.modal', function (e) {
+                     location.reload();
+                  });
                });
                
             } else {
                if ($scope.isUserLoggedIn) 
-                  alert('You already voted for this poll!');
+                  showWarningModal('You already voted for this poll!');
                else 
-                  alert('Your public IP address has voted for this poll!');
+                  showWarningModal('Your public IP address has voted for this poll!');
             }
          };
       }]);

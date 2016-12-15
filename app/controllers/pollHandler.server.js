@@ -6,14 +6,17 @@ function PollHandler () {
     this.addPoll = function (req, res) {
         var data = req.body;
         
-        // Checks if user already created the same poll
+        // Checks if poll already exists
         Polls
-            .findOne({ 'creator': data.creator, 'description_lower': data.description.toLowerCase() }, { '_id': false })
+            .findOne({ 'description_lower': data.description.toLowerCase() }, { '_id': false })
             .exec(function (err, result) {
                 if (err) { throw err; }
                 
                 if (result) {
-                    res.status(500).send('You already created a poll with the same description.');
+                    if (result.creator == data.creator)
+                        res.status(500).send('You already created a poll with the same description.');
+                    else
+                        res.status(500).send('Someone already created a poll with the same description.');
                 } else {
                     var poll = new Polls({
                         creator: data.creator,

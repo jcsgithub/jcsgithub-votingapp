@@ -7,6 +7,7 @@
          
          /***** INITIALIZE *****/
          $scope.loader = { isAddingPoll: false };
+         $scope.modal = { message: '' };
          $scope.newOption = '';
          $scope.newPoll = { creator: '', description: '', options: [] };
          
@@ -23,28 +24,49 @@
                $scope.newPoll.creator = result.id;
             });
          }
+         
+         function showWarningModal (message) {
+            $scope.modal.message = message;
+            $('#warningModal').modal('show');
+         }
 
          
          
          /***** USER CONTROLS *****/
          $scope.addOption = function (option) {
             if (!option) {
-               alert('Option required!');
+               showWarningModal('Option required!');
             } else {
-               var optionObject = { name: option, vote: 0 };
+               var isOptionDuplicate = false;
                
-               $scope.newPoll.options.push(optionObject);
-               $scope.newOption = '';
+               for (var i in $scope.newPoll.options) {
+                  if ($scope.newPoll.options[i].name.toLowerCase() == option.toLowerCase()) {
+                     isOptionDuplicate = true;
+                     break;
+                  }
+               }
+               
+               if (isOptionDuplicate) {
+                  showWarningModal('This option already exists!');
+               } else {
+                  var optionObject = { name: option, vote: 0 };
+                  
+                  $scope.newPoll.options.push(optionObject);
+                  $scope.newOption = '';
+               }
             }
          };
          
          $scope.addPoll = function () {
             if ($scope.newPoll.options.length < 2) {
-               alert('At least 2 options are required!');
+               showWarningModal('At least 2 options are required!');
             } else {
                $scope.loader.isAddingPoll = true;
                NewPoll.save($scope.newPoll, function (res) {
-                  window.location = 'https://jcsgithub-votingapp-jcsgithub.c9users.io/newpoll/success';
+                  $('#successModal').modal('show');
+                  $('#successModal').on('hide.bs.modal', function (e) {
+                     window.location = 'https://jcsgithub-votingapp.herokuapp.com/mypolls';
+                  });
                }, function (err) {
                   $scope.loader.isAddingPoll = false;
                   if (err.status == 500)

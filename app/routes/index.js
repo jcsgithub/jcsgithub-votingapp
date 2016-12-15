@@ -67,11 +67,6 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/newpoll.html');
 		});
 
-	app.route('/newpoll/success')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/newpoll-success.html');
-		});
-
 		
 		
 		
@@ -112,7 +107,7 @@ module.exports = function (app, passport) {
 
 	app.route('/auth/facebook/callback')
 		.get(passport.authenticate('facebook', {
-			successRedirect: '/',
+			successRedirect: '/mypolls',
 			failureRedirect: '/'
 		}));
 };
